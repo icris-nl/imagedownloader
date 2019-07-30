@@ -19,10 +19,11 @@ namespace Icris.ImageDownloader
         public Form1()
         {
             InitializeComponent();
+            this.listBox1.DataSource = links;
         }
 
         List<string> urls = new List<string>();
-
+        BindingList<string> links = new BindingList<string>();
         void GetImages(string url)
         {
             var document = new HtmlWeb().Load(url);
@@ -30,6 +31,15 @@ namespace Icris.ImageDownloader
             urls.AddRange(images
                             .Select(e => e.GetAttributeValue("src", null))
                             .Where(s => !String.IsNullOrEmpty(s)));
+            var parents = document.DocumentNode.Descendants("img").Select(x => x.ParentNode.Attributes["href"].Value.Replace("/url?q=", "")).ToList();
+
+            parents.ForEach(item =>
+            {
+                item = item.Substring(0, item.IndexOf("&amp;"));
+                links.Add(item);
+            }); ;
+
+            ///url?q=https://www.sinkegroep.nl/expertises/grondverzet/&amp;sa=U&amp;ved=0ahUKEwiU_bvCmcTjAhViyaYKHfgGDVoQwW4IHDAD&amp;usg=AOvVaw2xbgTm-PHhr4U-bEAzZeig
 
         }
         List<Image> rawimages = new List<Image>();
