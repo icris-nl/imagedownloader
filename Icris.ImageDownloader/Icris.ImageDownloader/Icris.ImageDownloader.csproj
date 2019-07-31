@@ -69,7 +69,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DevSettings.json" />
+    <None Include="DevSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
